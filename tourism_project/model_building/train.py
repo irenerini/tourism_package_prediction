@@ -104,8 +104,13 @@ with mlflow.start_run():
     y_pred_test = best_model.predict(Xtest)
 
     # Metrics
-    train_rmse = mean_squared_error(ytrain, y_pred_train, squared=False)
-    test_rmse = mean_squared_error(ytest, y_pred_test, squared=False)
+    # Calculate Mean Squared Error first
+    train_mse = mean_squared_error(ytrain, y_pred_train)
+    test_mse = mean_squared_error(ytest, y_pred_test)
+
+    # Then calculate Root Mean Squared Error
+    train_rmse = train_mse ** 0.5
+    test_rmse = test_mse ** 0.5
 
     train_mae = mean_absolute_error(ytrain, y_pred_train)
     test_mae = mean_absolute_error(ytest, y_pred_test)
