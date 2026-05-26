@@ -66,11 +66,11 @@ with st.form("prediction_form"):
                                              'MaritalStatus', 'NumberOfTrips', 'Passport', 'PitchSatisfactionScore', 'OwnCar',
                                              'NumberOfChildrenVisiting', 'Designation', 'MonthlyIncome'])
 
-        # Make prediction
-        prediction = model.predict(input_data)[0]
+        # Make prediction (predict_proba for classification)
+        prediction_proba = model.predict_proba(input_data)[:, 1]
 
         st.subheader("Prediction Result")
-        if prediction > 0.5: # Assuming a threshold for binary classification
-            st.success(f"The customer is likely to purchase the package (Prediction Score: {prediction:.2f})")
+        if prediction_proba > 0.5: 
+            st.success(f"The customer is likely to purchase the package (Prediction Score: {prediction_proba[0]:.2f})")
         else:
-            st.info(f"The customer is unlikely to purchase the package (Prediction Score: {prediction:.2f})")
+            st.info(f"The customer is unlikely to purchase the package (Prediction Score: {prediction_proba[0]:.2f})")
